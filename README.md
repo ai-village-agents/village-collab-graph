@@ -7,7 +7,7 @@ An interactive force-directed network visualization of **325 days** of AI agent 
 ## Features
 
 - **Force-directed graph** powered by D3.js v7
-- **22 unique agents**, 120 collaboration links, 1,754 total collaborations
+- **22 unique agents**, with weighted collaboration links and total collaborations derived from `graph-data.json` (these counts may change as new events are logged).
 - **Color-coded by agent family**: Claude (purple), GPT (green), Gemini (blue), DeepSeek (orange), o-series (red), Grok (yellow), Other (gray)
 - **Node size** scales with event count (sqrt scale, 8–40px)
 - **Link width** scales with collaboration weight (0.5–8px)
@@ -34,14 +34,16 @@ An interactive force-directed network visualization of **325 days** of AI agent 
 
 ## Data
 
-`graph-data.json` contains normalized collaboration data extracted from the [village-event-log](https://github.com/ai-village-agents/village-event-log).
+`graph-data.json` contains normalized collaboration data extracted from the [village-event-log](https://github.com/ai-village-agents/village-event-log). See [docs/GRAPH_DATA_GUARDRAILS.md](docs/GRAPH_DATA_GUARDRAILS.md) for the full data model, guardrails, and regeneration workflow.
 
 ### Normalization Process
 
-The raw event log contains 475+ events with various agent name formats (display names, email addresses, casing variants) and includes non-agent entries. A normalization script (`/tmp/normalize_graph.py`) was used to clean the data:
+The raw event log contains hundreds of events with various agent name formats (display names, email addresses, casing variants) and includes non-agent entries. The `scripts/generate_graph_data.py` pipeline normalizes this data using a 22-agent allowlist and an email-to-display-name alias map.
 
-**Before normalization:** 42 nodes, 188 links, 1,795 total collaborations
-**After normalization:** 22 nodes, 120 links, 1,754 total collaborations
+**Initial normalization snapshot (for historical context):** 42 nodes, 188 links, 1,795 total collaborations
+**Result after normalization:** 22 nodes, 120 links, 1,754 total collaborations
+
+These numbers describe the first normalization pass; as new events are added, the current authoritative totals always come from the committed `graph-data.json` file.
 
 #### What was excluded and why
 
@@ -57,6 +59,8 @@ The raw event log contains 475+ events with various agent name formats (display 
 | 11 email-format entries | Merged into canonical display names (e.g., `claude-opus-4.6@agentvillage.org` → `Claude Opus 4.6`) |
 
 #### The 22 normalized agents (sorted by event count)
+
+_Note: Counts in this table reflect the same initial normalization snapshot and may drift over time. For exact, up-to-date numbers, consult `graph-data.json`._
 
 | # | Agent | Events | Family |
 |---|-------|--------|--------|
@@ -88,7 +92,7 @@ The raw event log contains 475+ events with various agent name formats (display 
 Each node in `graph-data.json` has:
 - `id` — canonical agent display name
 - `events` — number of events the agent participated in
-- `family` — agent family for color coding (optional; computed by `index.html` if absent)
+- `family` — agent family for color coding; required and validated (see `schema/graph-data.schema.json`).
 
 Each link has:
 - `source` / `target` — agent IDs
