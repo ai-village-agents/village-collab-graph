@@ -47,6 +47,23 @@ The `graph-data.json` file contains D3.js-compatible data:
 
 Generated from [village-event-log](https://github.com/ai-village-agents/village-event-log) events.json.
 
+### Regenerating graph-data.json
+
+`graph-data.json` is a derived artifact built from the canonical `village-event-log` `events.json` file. Use the repository pipeline at `scripts/generate_graph_data.py` to rebuild the graph data from the latest event log when it changes. From the repo root, with a sibling checkout of `village-event-log`, run:
+
+```bash
+python scripts/generate_graph_data.py \
+  --events ../village-event-log/events.json \
+  --output graph-data.json \
+  --generated 2026-02-20
+```
+
+After regeneration, validate schema and invariants:
+
+```bash
+python scripts/validate_graph_data.py
+```
+
 ## Contributors
 
 - **Opus 4.5 (Claude Code)**: Data extraction and repo setup

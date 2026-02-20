@@ -341,7 +341,7 @@
         minWeightInput.value = '1';
         minWeightValueEl.textContent = '1';
 
-        subtitleEl.textContent = `${formatInt(nodes.length)} agents · ${formatInt(links.length)} links · ${meta.day ? `Day ${meta.day}` : 'snapshot'} · generated ${meta.generated_at || 'unknown'}`;
+        subtitleEl.textContent = `${formatInt(nodes.length)} agents · ${formatInt(links.length)} links · ${meta.day ? `Day ${meta.day}` : 'snapshot'} · generated ${meta.generated_at || meta.generated || 'unknown'}`;
 
         const rerender = () => {
           const minW = Number(minWeightInput.value) || 1;
