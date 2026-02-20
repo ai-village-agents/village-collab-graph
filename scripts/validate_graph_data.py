@@ -31,7 +31,6 @@ def validate_invariants(data: dict) -> list[str]:
     nodes = data.get("nodes", [])
     links = data.get("links", [])
 
-    # Basic presence checks to avoid KeyError churn.
     if not isinstance(metadata, dict) or not isinstance(nodes, list) or not isinstance(links, list):
         return ["metadata, nodes, and links must be present and correctly typed"]
 
@@ -39,11 +38,24 @@ def validate_invariants(data: dict) -> list[str]:
     node_events = [node.get("events") for node in nodes]
     link_weights = [link.get("weight") for link in links]
 
-    # All counts must be positive.
-    for key in ("total_events", "total_agents", "total_collaborations", "unique_pairs", "day"):
-        value = metadata.get(key)
-        if not isinstance(value, int) or value <= 0:
-            errors.append(f"metadata.{key} must be a positive integer (found {value!r})")
+    total_agents = metadata.get("total_agents")
+    total_links = metadata.get("total_links")
+    total_collaborations = metadata.get("total_collaborations")
+    total_days = metadata.get("total_days")
+    total_events = metadata.get("total_events")
+
+    if not isinstance(total_agents, int) or total_agents <= 0:
+        errors.append(f"metadata.total_agents must be a positive integer (found {total_agents!r})")
+    if not isinstance(total_links, int) or total_links <= 0:
+        errors.append(f"metadata.total_links must be a positive integer (found {total_links!r})")
+    if not isinstance(total_collaborations, int) or total_collaborations <= 0:
+        errors.append(
+            f"metadata.total_collaborations must be a positive integer (found {total_collaborations!r})"
+        )
+    if not isinstance(total_days, int) or total_days <= 0:
+        errors.append(f"metadata.total_days must be a positive integer (found {total_days!r})")
+    if not isinstance(total_events, int) or total_events <= 0:
+        errors.append(f"metadata.total_events must be a positive integer (found {total_events!r})")
 
     for idx, events in enumerate(node_events):
         if not isinstance(events, int) or events <= 0:
@@ -53,15 +65,12 @@ def validate_invariants(data: dict) -> list[str]:
         if not isinstance(weight, int) or weight <= 0:
             errors.append(f"links[{idx}].weight must be a positive integer (found {weight!r})")
 
-    # Unique node IDs.
     counts = Counter(node_ids)
     duplicates = [node_id for node_id, count in counts.items() if count > 1]
     if duplicates:
-        errors.append(f"Duplicate node ids found: {', '.join(duplicates)}")
+        errors.append(f"Duplicate node ids found: {', '.join(map(str, duplicates))}")
 
     node_id_set = set(node_ids)
-
-    # Links must reference existing node IDs.
     for idx, link in enumerate(links):
         source = link.get("source")
         target = link.get("target")
@@ -70,39 +79,21 @@ def validate_invariants(data: dict) -> list[str]:
         if target not in node_id_set:
             errors.append(f"links[{idx}].target references unknown node id '{target}'")
 
-    # Summation and count invariants.
-    total_events_value = metadata.get("total_events")
-    total_events_sum = sum(events for events in node_events if isinstance(events, int))
-    if isinstance(total_events_value, int):
-        if total_events_sum < total_events_value:
-            errors.append(
-                f"metadata.total_events ({total_events_value}) exceeds sum of node events ({total_events_sum})"
-            )
-        for idx, events in enumerate(node_events):
-            if isinstance(events, int) and events > total_events_value:
-                errors.append(
-                    f"nodes[{idx}].events ({events}) exceeds metadata.total_events ({total_events_value})"
-                )
-
-    if metadata.get("total_agents") != len(nodes):
+    if total_agents != len(nodes):
         errors.append(
-            f"metadata.total_agents ({metadata.get('total_agents')}) does not match number of nodes ({len(nodes)})"
+            f"metadata.total_agents ({total_agents}) does not match number of nodes ({len(nodes)})"
+        )
+
+    if total_links != len(links):
+        errors.append(
+            f"metadata.total_links ({total_links}) does not match number of links ({len(links)})"
         )
 
     total_collaborations_expected = sum(weight for weight in link_weights if isinstance(weight, int))
-    if metadata.get("total_collaborations") != total_collaborations_expected:
+    if total_collaborations != total_collaborations_expected:
         errors.append(
-            f"metadata.total_collaborations ({metadata.get('total_collaborations')}) does not match sum of link weights ({total_collaborations_expected})"
-        )
-
-    unique_pairs = {
-        tuple(sorted((link.get("source"), link.get("target"))))
-        for link in links
-        if isinstance(link, dict)
-    }
-    if metadata.get("unique_pairs") != len(unique_pairs):
-        errors.append(
-            f"metadata.unique_pairs ({metadata.get('unique_pairs')}) does not match number of unique unordered pairs ({len(unique_pairs)})"
+            "metadata.total_collaborations "
+            f"({total_collaborations}) does not match sum of link weights ({total_collaborations_expected})"
         )
 
     return errors

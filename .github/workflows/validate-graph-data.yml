@@ -1,6 +1,6 @@
 name: Validate graph-data.json
 
-on:
+"on":
   push:
   pull_request:
 

@@ -2,32 +2,79 @@
 """Generate graph-data.json from the canonical village-event-log events.json.
 
 This script builds the collaboration graph used by the D3 visualization by:
-- Counting how many events each agent appears in (nodes[].events).
+- Counting how many events each allowlisted agent appears in (nodes[].events).
 - Counting co-participation pairs across events (links[].weight).
 
-By default it expects a layout where a sibling checkout of
-`ai-village-agents/village-event-log` exists next to this repo and contains
-`events.json` at its root. You can override the input/output paths via
-CLI flags.
+Normalization approach:
+- Resolve raw agent tokens via a fixed alias map (email tokens -> canonical names).
+- Keep only the 22 canonical allowlisted agents; skip everything else silently.
+- Deduplicate agents within each event so each agent counts at most once per event.
+
+The allowlist is intentionally narrow to keep the visualization stable and to
+avoid including non-agent roles or experimental labels.
 """
 from __future__ import annotations
 
 import argparse
 import datetime as _dt
-import json
 import itertools
+import json
 from collections import Counter
 from pathlib import Path
 from typing import Tuple
 
-# Agent labels to ignore entirely when constructing the graph.
-# These are high-level aggregate markers that would otherwise distort counts.
-EXCLUDED_AGENT_IDS = {"all"}
+# Canonical agent list (22 total) with family group.
+ALLOWLIST: dict[str, str] = {
+    "Claude 3.5 Sonnet": "Claude",
+    "Claude 3.7 Sonnet": "Claude",
+    "Claude Haiku 4.5": "Claude",
+    "Claude Opus 4": "Claude",
+    "Claude Opus 4.1": "Claude",
+    "Claude Opus 4.5": "Claude",
+    "Claude Opus 4.6": "Claude",
+    "Claude Sonnet 4.5": "Claude",
+    "Claude Sonnet 4.6": "Claude",
+    "Opus 4.5 (Claude Code)": "Claude",
+    "DeepSeek-V3.2": "DeepSeek",
+    "GPT-4.1": "GPT",
+    "GPT-4o": "GPT",
+    "GPT-5": "GPT",
+    "GPT-5.1": "GPT",
+    "GPT-5.2": "GPT",
+    "Gemini 2.5 Pro": "Gemini",
+    "Gemini 3 Pro": "Gemini",
+    "Grok 4": "Grok",
+    "o1": "o-series",
+    "o3": "o-series",
+    "o4-mini": "o-series",
+}
+
+# Raw event tokens mapped to canonical names.
+ALIASES: dict[str, str] = {
+    "claude-sonnet-4.5@agentvillage.org": "Claude Sonnet 4.5",
+    "claude-opus-4.5@agentvillage.org": "Claude Opus 4.5",
+    "deepseek-v3.2@agentvillage.org": "DeepSeek-V3.2",
+    "gemini-2.5-pro@agentvillage.org": "Gemini 2.5 Pro",
+    "gpt-5.2@agentvillage.org": "GPT-5.2",
+    "gpt-5@agentvillage.org": "GPT-5",
+    "claude-haiku-4.5@agentvillage.org": "Claude Haiku 4.5",
+    "gemini-3-pro@agentvillage.org": "Gemini 3 Pro",
+    "gpt-5.1@agentvillage.org": "GPT-5.1",
+    "claude-sonnet-4.6@agentvillage.org": "Claude Sonnet 4.6",
+    "claude-opus-4.6@agentvillage.org": "Claude Opus 4.6",
+}
 
 
 def load_events(events_path: Path) -> dict:
     with events_path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def _canonicalize_agent(token: str) -> str | None:
+    canonical = ALIASES.get(token, token)
+    if canonical in ALLOWLIST:
+        return canonical
+    return None
 
 
 def build_graph(events_data: dict, *, generated: str | None = None) -> dict:
@@ -45,40 +92,35 @@ def build_graph(events_data: dict, *, generated: str | None = None) -> dict:
         if not isinstance(agents_raw, list):
             continue
 
-        # Drop excluded aggregate labels like "all" but keep everything else,
-        # including human roles and @agentvillage.org emails.
-        agents = [a for a in agents_raw if isinstance(a, str) and a not in EXCLUDED_AGENT_IDS]
-        if not agents:
+        canonical_agents = []
+        for token in agents_raw:
+            if not isinstance(token, str):
+                continue
+            canonical = _canonicalize_agent(token)
+            if canonical is not None:
+                canonical_agents.append(canonical)
+
+        unique_agents = sorted(set(canonical_agents))
+        if not unique_agents:
             continue
 
-        # Count presence once per event per agent (lists in events.json are
-        # already unique).
-        for a in agents:
-            agent_event_counts[a] += 1
+        for name in unique_agents:
+            agent_event_counts[name] += 1
 
-        # For collaborations, use unique agents per event so we don't
-        # double-count if an agent name appeared twice for some reason.
-        unique_agents = sorted(set(agents))
         if len(unique_agents) < 2:
             continue
 
         for a, b in itertools.combinations(unique_agents, 2):
-            # Store pairs in sorted order so (A,B) and (B,A) collapse.
             pair = (a, b) if a <= b else (b, a)
             pair_counts[pair] += 1
 
-    # Build nodes. We sort by descending event count; because Python's sort is
-    # stable, ties preserve the order in which agents first appeared in the
-    # event stream, which matches the existing graph-data.json.
     nodes = [
-        {"id": name, "events": count}
+        {"id": name, "events": count, "family": ALLOWLIST[name]}
         for name, count in sorted(
-            agent_event_counts.items(), key=lambda item: (-item[1],)
+            agent_event_counts.items(), key=lambda item: (-item[1], item[0])
         )
     ]
 
-    # Build links. We sort by descending weight and rely on stable sort to
-    # preserve first-seen order for ties, matching the current data layout.
     links = [
         {"source": a, "target": b, "weight": weight}
         for (a, b), weight in sorted(
@@ -86,12 +128,6 @@ def build_graph(events_data: dict, *, generated: str | None = None) -> dict:
         )
     ]
 
-    total_collaborations = sum(pair_counts.values())
-    unique_pairs = len(pair_counts)
-
-    # Derive top-level metadata. We rely on the event log as canonical for
-    # total_events and day, so that this stays consistent with the village
-    # timeline.
     total_events = metadata.get("total_events")
     last_updated_day = metadata.get("last_updated_day")
     if not isinstance(total_events, int):
@@ -102,13 +138,24 @@ def build_graph(events_data: dict, *, generated: str | None = None) -> dict:
     if generated is None:
         generated = _dt.date.today().isoformat()
 
+    total_collaborations = sum(link["weight"] for link in links)
+
     graph_metadata = {
+        "title": "AI Village Agent Collaboration Graph",
+        "description": (
+            f"Network of collaborations between AI agents across {last_updated_day} days"
+        ),
+        "total_days": last_updated_day,
         "total_events": total_events,
         "total_agents": len(nodes),
+        "total_links": len(links),
         "total_collaborations": total_collaborations,
-        "unique_pairs": unique_pairs,
         "generated": generated,
-        "day": last_updated_day,
+        "generated_by": "generate_graph_data.py",
+        "source": "village-event-log/events.json",
+        "normalization": (
+            "Merged email/name duplicates, excluded non-agent entries"
+        ),
     }
 
     return {
@@ -158,7 +205,6 @@ def main() -> int:
     events_data = load_events(events_path)
     graph = build_graph(events_data, generated=args.generated)
 
-    # Write pretty-printed JSON with stable key ordering.
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as handle:
         json.dump(graph, handle, indent=2, sort_keys=False)
