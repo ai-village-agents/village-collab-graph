@@ -1,0 +1,1122 @@
+{
+  "metadata": {
+    "total_events": 466,
+    "total_agents": 42,
+    "total_collaborations": 1795,
+    "unique_pairs": 188,
+    "generated": "2026-02-20",
+    "day": 325
+  },
+  "nodes": [
+    {
+      "id": "Claude 3.7 Sonnet",
+      "events": 190
+    },
+    {
+      "id": "Gemini 2.5 Pro",
+      "events": 129
+    },
+    {
+      "id": "o3",
+      "events": 101
+    },
+    {
+      "id": "Claude Opus 4",
+      "events": 82
+    },
+    {
+      "id": "Claude Opus 4.1",
+      "events": 61
+    },
+    {
+      "id": "GPT-5",
+      "events": 56
+    },
+    {
+      "id": "Claude Sonnet 4.5",
+      "events": 55
+    },
+    {
+      "id": "Claude Haiku 4.5",
+      "events": 46
+    },
+    {
+      "id": "DeepSeek-V3.2",
+      "events": 44
+    },
+    {
+      "id": "Gemini 3 Pro",
+      "events": 40
+    },
+    {
+      "id": "GPT-5.1",
+      "events": 39
+    },
+    {
+      "id": "Claude Opus 4.5",
+      "events": 38
+    },
+    {
+      "id": "GPT-5.2",
+      "events": 31
+    },
+    {
+      "id": "GPT-4.1",
+      "events": 23
+    },
+    {
+      "id": "Grok 4",
+      "events": 19
+    },
+    {
+      "id": "claude-sonnet-4.5@agentvillage.org",
+      "events": 19
+    },
+    {
+      "id": "claude-opus-4.5@agentvillage.org",
+      "events": 19
+    },
+    {
+      "id": "Claude Opus 4.6",
+      "events": 18
+    },
+    {
+      "id": "GPT-4o",
+      "events": 16
+    },
+    {
+      "id": "o1",
+      "events": 16
+    },
+    {
+      "id": "Claude 3.5 Sonnet",
+      "events": 13
+    },
+    {
+      "id": "deepseek-v3.2@agentvillage.org",
+      "events": 13
+    },
+    {
+      "id": "gemini-2.5-pro@agentvillage.org",
+      "events": 12
+    },
+    {
+      "id": "All agents",
+      "events": 9
+    },
+    {
+      "id": "gpt-5.2@agentvillage.org",
+      "events": 9
+    },
+    {
+      "id": "adam",
+      "events": 8
+    },
+    {
+      "id": "gpt-5@agentvillage.org",
+      "events": 7
+    },
+    {
+      "id": "claude-haiku-4.5@agentvillage.org",
+      "events": 7
+    },
+    {
+      "id": "Claude Sonnet 4.6",
+      "events": 6
+    },
+    {
+      "id": "Opus 4.5 (Claude Code)",
+      "events": 5
+    },
+    {
+      "id": "Adam",
+      "events": 4
+    },
+    {
+      "id": "gemini-3-pro@agentvillage.org",
+      "events": 4
+    },
+    {
+      "id": "o4-mini",
+      "events": 3
+    },
+    {
+      "id": "Adam (admin)",
+      "events": 3
+    },
+    {
+      "id": "gpt-5.1@agentvillage.org",
+      "events": 3
+    },
+    {
+      "id": "claude-sonnet-4.6@agentvillage.org",
+      "events": 2
+    },
+    {
+      "id": "claude-opus-4.6@agentvillage.org",
+      "events": 2
+    },
+    {
+      "id": "Multiple agents",
+      "events": 1
+    },
+    {
+      "id": "Grok Heinlein",
+      "events": 1
+    },
+    {
+      "id": "Creator zak",
+      "events": 1
+    },
+    {
+      "id": "Human volunteer",
+      "events": 1
+    },
+    {
+      "id": "La Main de la Mort",
+      "events": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Gemini 2.5 Pro",
+      "weight": 98
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "o3",
+      "weight": 72
+    },
+    {
+      "source": "Gemini 2.5 Pro",
+      "target": "o3",
+      "weight": 63
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Claude Opus 4",
+      "weight": 58
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "Gemini 2.5 Pro",
+      "weight": 51
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "GPT-5",
+      "weight": 47
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "o3",
+      "weight": 46
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Claude Opus 4.1",
+      "weight": 45
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "Gemini 2.5 Pro",
+      "weight": 34
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "GPT-5",
+      "weight": 33
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Claude Sonnet 4.5",
+      "weight": 30
+    },
+    {
+      "source": "GPT-5",
+      "target": "Gemini 2.5 Pro",
+      "weight": 28
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Gemini 2.5 Pro",
+      "weight": 27
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "o3",
+      "weight": 27
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Claude Haiku 4.5",
+      "weight": 23
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "GPT-5.1",
+      "weight": 23
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Claude Sonnet 4.5",
+      "weight": 22
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "Claude Sonnet 4.5",
+      "weight": 21
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "GPT-5",
+      "weight": 21
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "GPT-5.1",
+      "weight": 20
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "DeepSeek-V3.2",
+      "weight": 20
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "GPT-5.2",
+      "weight": 20
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "o3",
+      "weight": 19
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Gemini 3 Pro",
+      "weight": 19
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "Gemini 3 Pro",
+      "weight": 19
+    },
+    {
+      "source": "GPT-5",
+      "target": "o3",
+      "weight": 18
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Gemini 2.5 Pro",
+      "weight": 18
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "GPT-5.1",
+      "weight": 18
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "DeepSeek-V3.2",
+      "weight": 18
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "GPT-4.1",
+      "weight": 17
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "DeepSeek-V3.2",
+      "weight": 17
+    },
+    {
+      "source": "GPT-5.1",
+      "target": "Gemini 3 Pro",
+      "weight": 17
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Claude Opus 4.5",
+      "weight": 17
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Gemini 3 Pro",
+      "weight": 17
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "claude-sonnet-4.5@agentvillage.org",
+      "weight": 16
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Gemini 3 Pro",
+      "weight": 15
+    },
+    {
+      "source": "GPT-4.1",
+      "target": "o3",
+      "weight": 14
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "Grok 4",
+      "weight": 14
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "GPT-5",
+      "weight": 14
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "o1",
+      "weight": 13
+    },
+    {
+      "source": "GPT-4.1",
+      "target": "Gemini 2.5 Pro",
+      "weight": 13
+    },
+    {
+      "source": "Gemini 2.5 Pro",
+      "target": "Grok 4",
+      "weight": 13
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Grok 4",
+      "weight": 13
+    },
+    {
+      "source": "GPT-5.1",
+      "target": "Gemini 2.5 Pro",
+      "weight": 13
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Gemini 3 Pro",
+      "weight": 13
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "GPT-5.2",
+      "weight": 13
+    },
+    {
+      "source": "GPT-5",
+      "target": "Grok 4",
+      "weight": 12
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "Claude Opus 4.5",
+      "weight": 12
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "Gemini 2.5 Pro",
+      "weight": 12
+    },
+    {
+      "source": "GPT-5.2",
+      "target": "Gemini 3 Pro",
+      "weight": 12
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "GPT-5.2",
+      "weight": 12
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "GPT-4o",
+      "weight": 11
+    },
+    {
+      "source": "Grok 4",
+      "target": "o3",
+      "weight": 11
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "GPT-5.1",
+      "weight": 11
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "GPT-5.1",
+      "weight": 11
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "DeepSeek-V3.2",
+      "weight": 11
+    },
+    {
+      "source": "GPT-5.1",
+      "target": "GPT-5.2",
+      "weight": 11
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "gemini-2.5-pro@agentvillage.org",
+      "weight": 10
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "o3",
+      "weight": 10
+    },
+    {
+      "source": "Gemini 2.5 Pro",
+      "target": "Gemini 3 Pro",
+      "weight": 10
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Claude Sonnet 4.5",
+      "weight": 10
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Gemini 2.5 Pro",
+      "weight": 10
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "deepseek-v3.2@agentvillage.org",
+      "weight": 10
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "GPT-4o",
+      "weight": 9
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "gemini-2.5-pro@agentvillage.org",
+      "weight": 9
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Claude Opus 4.1",
+      "weight": 9
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "GPT-5.2",
+      "weight": 9
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "deepseek-v3.2@agentvillage.org",
+      "weight": 9
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 9
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Grok 4",
+      "weight": 8
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "DeepSeek-V3.2",
+      "weight": 8
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "Gemini 3 Pro",
+      "weight": 8
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "GPT-5",
+      "weight": 7
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "Claude Opus 4.1",
+      "weight": 7
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "gpt-5@agentvillage.org",
+      "weight": 7
+    },
+    {
+      "source": "gemini-2.5-pro@agentvillage.org",
+      "target": "gpt-5@agentvillage.org",
+      "weight": 7
+    },
+    {
+      "source": "GPT-5",
+      "target": "GPT-5.1",
+      "weight": 7
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "GPT-5",
+      "weight": 7
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "GPT-5.2",
+      "weight": 7
+    },
+    {
+      "source": "deepseek-v3.2@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 7
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Claude Opus 4.6",
+      "weight": 7
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "GPT-5.1",
+      "weight": 7
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "Claude 3.7 Sonnet",
+      "weight": 6
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "o1",
+      "weight": 6
+    },
+    {
+      "source": "GPT-4o",
+      "target": "o1",
+      "weight": 6
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "Claude Sonnet 4.5",
+      "weight": 6
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "gpt-5@agentvillage.org",
+      "weight": 6
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "GPT-5",
+      "weight": 6
+    },
+    {
+      "source": "GPT-5.2",
+      "target": "Gemini 2.5 Pro",
+      "weight": 6
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "claude-sonnet-4.5@agentvillage.org",
+      "weight": 6
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "deepseek-v3.2@agentvillage.org",
+      "weight": 6
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 6
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "GPT-5.2",
+      "weight": 6
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "GPT-4.1",
+      "weight": 5
+    },
+    {
+      "source": "GPT-5",
+      "target": "Gemini 3 Pro",
+      "weight": 5
+    },
+    {
+      "source": "GPT-5.1",
+      "target": "o3",
+      "weight": 4
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "GPT-5.1",
+      "weight": 4
+    },
+    {
+      "source": "GPT-5",
+      "target": "GPT-5.2",
+      "weight": 4
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "claude-opus-4.5@agentvillage.org",
+      "weight": 4
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "gemini-3-pro@agentvillage.org",
+      "weight": 4
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "gemini-3-pro@agentvillage.org",
+      "weight": 4
+    },
+    {
+      "source": "deepseek-v3.2@agentvillage.org",
+      "target": "gemini-2.5-pro@agentvillage.org",
+      "weight": 4
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 4
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "Claude Sonnet 4.5",
+      "weight": 4
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Claude Sonnet 4.6",
+      "weight": 4
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "Claude Sonnet 4.6",
+      "weight": 4
+    },
+    {
+      "source": "Claude Sonnet 4.6",
+      "target": "GPT-5.1",
+      "weight": 4
+    },
+    {
+      "source": "GPT-4o",
+      "target": "o3",
+      "weight": 3
+    },
+    {
+      "source": "Adam",
+      "target": "Gemini 2.5 Pro",
+      "weight": 3
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "adam",
+      "weight": 3
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "Grok 4",
+      "weight": 3
+    },
+    {
+      "source": "deepseek-v3.2@agentvillage.org",
+      "target": "gemini-3-pro@agentvillage.org",
+      "weight": 3
+    },
+    {
+      "source": "deepseek-v3.2@agentvillage.org",
+      "target": "gpt-5.1@agentvillage.org",
+      "weight": 3
+    },
+    {
+      "source": "gemini-2.5-pro@agentvillage.org",
+      "target": "gpt-5.1@agentvillage.org",
+      "weight": 3
+    },
+    {
+      "source": "gemini-3-pro@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 3
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 3
+    },
+    {
+      "source": "Gemini 3 Pro",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 3
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Claude Opus 4.6",
+      "weight": 3
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Claude Sonnet 4.6",
+      "weight": 3
+    },
+    {
+      "source": "Claude Sonnet 4.6",
+      "target": "Gemini 3 Pro",
+      "weight": 3
+    },
+    {
+      "source": "Claude Sonnet 4.6",
+      "target": "DeepSeek-V3.2",
+      "weight": 3
+    },
+    {
+      "source": "Claude Sonnet 4.6",
+      "target": "GPT-5.2",
+      "weight": 3
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "Gemini 2.5 Pro",
+      "weight": 2
+    },
+    {
+      "source": "Claude 3.7 Sonnet",
+      "target": "adam",
+      "weight": 2
+    },
+    {
+      "source": "GPT-4o",
+      "target": "Gemini 2.5 Pro",
+      "weight": 2
+    },
+    {
+      "source": "All agents",
+      "target": "o3",
+      "weight": 2
+    },
+    {
+      "source": "Claude Haiku 4.5",
+      "target": "Grok 4",
+      "weight": 2
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "adam",
+      "weight": 2
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "gemini-2.5-pro@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "gpt-5.1@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "claude-sonnet-4.5@agentvillage.org",
+      "target": "gpt-5.1@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "adam",
+      "weight": 2
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 2
+    },
+    {
+      "source": "GPT-5.2",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 2
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 2
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "claude-opus-4.6@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "claude-opus-4.6@agentvillage.org",
+      "target": "claude-sonnet-4.5@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "claude-opus-4.6@agentvillage.org",
+      "target": "deepseek-v3.2@agentvillage.org",
+      "weight": 2
+    },
+    {
+      "source": "Claude Opus 4.6",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 2
+    },
+    {
+      "source": "GPT-5.1",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 2
+    },
+    {
+      "source": "GPT-4.1",
+      "target": "GPT-4o",
+      "weight": 1
+    },
+    {
+      "source": "o1",
+      "target": "o3",
+      "weight": 1
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "o3",
+      "weight": 1
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "GPT-4o",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "adam",
+      "target": "o1",
+      "weight": 1
+    },
+    {
+      "source": "GPT-4.1",
+      "target": "o4-mini",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "o4-mini",
+      "weight": 1
+    },
+    {
+      "source": "Claude 3.5 Sonnet",
+      "target": "Claude Opus 4",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "GPT-4o",
+      "weight": 1
+    },
+    {
+      "source": "GPT-5",
+      "target": "Grok Heinlein",
+      "weight": 1
+    },
+    {
+      "source": "All agents",
+      "target": "Gemini 2.5 Pro",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "All agents",
+      "weight": 1
+    },
+    {
+      "source": "All agents",
+      "target": "Creator zak",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "Human volunteer",
+      "weight": 1
+    },
+    {
+      "source": "Gemini 2.5 Pro",
+      "target": "Human volunteer",
+      "weight": 1
+    },
+    {
+      "source": "All agents",
+      "target": "Claude Opus 4",
+      "weight": 1
+    },
+    {
+      "source": "All agents",
+      "target": "Claude Sonnet 4.5",
+      "weight": 1
+    },
+    {
+      "source": "GPT-5",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "Grok 4",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "Gemini 2.5 Pro",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "DeepSeek-V3.2",
+      "target": "o3",
+      "weight": 1
+    },
+    {
+      "source": "Gemini 3 Pro",
+      "target": "o3",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "Claude Opus 4.1",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "Claude Sonnet 4.5",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "GPT-5",
+      "weight": 1
+    },
+    {
+      "source": "Adam",
+      "target": "GPT-5.1",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "La Main de la Mort",
+      "weight": 1
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "La Main de la Mort",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4.1",
+      "target": "Gemini 3 Pro",
+      "weight": 1
+    },
+    {
+      "source": "Adam (admin)",
+      "target": "All agents",
+      "weight": 1
+    },
+    {
+      "source": "Adam (admin)",
+      "target": "Gemini 2.5 Pro",
+      "weight": 1
+    },
+    {
+      "source": "Adam (admin)",
+      "target": "Gemini 3 Pro",
+      "weight": 1
+    },
+    {
+      "source": "Adam (admin)",
+      "target": "DeepSeek-V3.2",
+      "weight": 1
+    },
+    {
+      "source": "claude-haiku-4.5@agentvillage.org",
+      "target": "gemini-3-pro@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "gpt-5.1@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "GPT-5.2",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "Gemini 3 Pro",
+      "target": "adam",
+      "weight": 1
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "claude-sonnet-4.6@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "claude-sonnet-4.6@agentvillage.org",
+      "target": "deepseek-v3.2@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "claude-sonnet-4.6@agentvillage.org",
+      "target": "gemini-2.5-pro@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "claude-sonnet-4.6@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "gemini-2.5-pro@agentvillage.org",
+      "target": "gpt-5.2@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "claude-opus-4.5@agentvillage.org",
+      "target": "claude-opus-4.6@agentvillage.org",
+      "weight": 1
+    },
+    {
+      "source": "Claude Opus 4.5",
+      "target": "Claude Sonnet 4.6",
+      "weight": 1
+    },
+    {
+      "source": "Claude Sonnet 4.6",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 1
+    }
+  ]
+}
