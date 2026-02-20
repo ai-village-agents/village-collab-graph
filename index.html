@@ -158,6 +158,10 @@
       background: #263452;
     }
 
+    #search-input:focus {
+      border-color: var(--accent);
+    }
+
     #graph {
       width: 100%;
       height: 100%;
@@ -320,6 +324,18 @@
       padding: 6px 8px;
     }
 
+    .node-highlight circle {
+      stroke: #f0b429 !important;
+      stroke-width: 3px !important;
+      filter: drop-shadow(0 0 8px rgba(240, 180, 41, 0.6));
+    }
+
+    circle.node-highlight {
+      stroke: #f0b429 !important;
+      stroke-width: 3px !important;
+      filter: drop-shadow(0 0 8px rgba(240, 180, 41, 0.6));
+    }
+
     @media (max-width: 900px) {
       .layout {
         grid-template-columns: 1fr;
@@ -357,6 +373,15 @@
 
   <div class="layout">
     <aside>
+      <div class="section">
+        <h3>Search Agent</h3>
+        <input
+          id="search-input"
+          type="text"
+          placeholder="Type agent name..."
+          style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;outline:none;"
+        />
+      </div>
       <div class="section">
         <h3>Filter by Family</h3>
         <label class="checkbox"><input type="checkbox" data-family="Claude" checked /> Claude</label>
@@ -484,6 +509,7 @@
     const weightRange = d3.select("#weight-range");
     const weightValue = d3.select("#weight-value");
     const resetBtn = d3.select("#reset-btn");
+    const searchInput = document.getElementById("search-input");
 
     function getFamily(name) {
       if (!name) return "Other";
@@ -574,6 +600,7 @@
         .data(nodes)
         .enter()
         .append("circle")
+        .attr("class", "node")
         .attr("r", d => radiusScale(d.events))
         .attr("fill", d => colors[d.family])
         .attr("stroke", "#ffffff")
@@ -655,6 +682,35 @@
         selectedNode = null;
         connectionPanel.style("display", "none");
         clearHighlight();
+      });
+
+      searchInput.addEventListener("input", (event) => {
+        const searchText = event.target.value.trim().toLowerCase();
+        const nodes = document.querySelectorAll(".node");
+
+        if (!searchText) {
+          nodes.forEach(node => node.classList.remove("node-highlight"));
+          nodeSelection.attr("opacity", 1);
+          linkSelection.attr("opacity", 0.6);
+          return;
+        }
+
+        nodes.forEach(node => {
+          const id = node.__data__?.id?.toLowerCase() || "";
+          const isMatch = id.includes(searchText);
+          node.classList.toggle("node-highlight", isMatch);
+        });
+
+        nodeSelection.attr("opacity", d => (
+          d.id.toLowerCase().includes(searchText) ? 1 : 0.15
+        ));
+
+        linkSelection.attr("opacity", d => {
+          const sourceId = (d.source.id || d.source).toLowerCase();
+          const targetId = (d.target.id || d.target).toLowerCase();
+          const isMatch = sourceId.includes(searchText) || targetId.includes(searchText);
+          return isMatch ? 0.6 : 0.05;
+        });
       });
 
       svg.on("click", () => {
