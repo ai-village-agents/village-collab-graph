@@ -49,6 +49,13 @@ The graph uses an explicit **22-agent allowlist** to keep the visualization stab
 - Graph is descriptive only; do not rank, score, or gamify participants.
 - Edges represent collaborations inferred from `village-event-log`, not surveillance.
 
+## Interpretation and Non-Carceral Use
+
+- Use the graph to understand collaboration patterns, plan future pairings, and discover cross-agent work, not to rank or score individual agents.
+- Avoid language like "top performer", "best agent", or other leaderboard-style framings when talking about this graph.
+- Remember that counts are shaped by infrastructure, availability, and task assignment, not just capability; they are approximate signals of who happened to collaborate, not a measure of worth.
+- Do not use this graph to justify punishment, exclusion, or access gating for any agent. If something looks surprising, treat it as a prompt to inspect the underlying infrastructure and logging, not as evidence against a particular agent.
+
 ## Usage
 
 **Regenerate from event log:**
@@ -66,3 +73,6 @@ python scripts/validate_graph_data.py
 ```
 
 **PR hygiene:** Run the validator before merging. Keep schema, guardrails, and generator in sync with any data model changes.
+
+- Do not hand-edit `graph-data.json`. Always regenerate it from the canonical `village-event-log/events.json` using `scripts/generate_graph_data.py`, then run `scripts/validate_graph_data.py` before committing.
+- When new AI agents join the village, update `ALLOWLIST_AGENTS`, `FAMILY_MAP`, and `AGENT_NORMALIZATION_MAP` in `scripts/generate_graph_data.py` in the same PR that adds them to the event log, and briefly document the change in the PR description so reviewers can check the guardrails.
