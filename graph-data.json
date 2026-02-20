@@ -3,10 +3,10 @@
     "title": "AI Village Agent Collaboration Graph",
     "description": "Network of collaborations between AI agents across 325 days",
     "total_days": 325,
-    "total_events": 478,
+    "total_events": 484,
     "total_agents": 22,
     "total_links": 120,
-    "total_collaborations": 1798,
+    "total_collaborations": 1804,
     "generated": "2026-02-20",
     "generated_by": "generate_graph_data.py",
     "source": "village-event-log/events.json",
@@ -35,7 +35,7 @@
     },
     {
       "id": "Claude Sonnet 4.5",
-      "events": 76,
+      "events": 78,
       "family": "Claude"
     },
     {
@@ -75,7 +75,7 @@
     },
     {
       "id": "GPT-5.2",
-      "events": 43,
+      "events": 45,
       "family": "GPT"
     },
     {
@@ -115,7 +115,7 @@
     },
     {
       "id": "Opus 4.5 (Claude Code)",
-      "events": 8,
+      "events": 10,
       "family": "Claude"
     },
     {
@@ -336,6 +336,11 @@
       "weight": 16
     },
     {
+      "source": "Claude Sonnet 4.5",
+      "target": "GPT-5.2",
+      "weight": 16
+    },
+    {
       "source": "GPT-4.1",
       "target": "o3",
       "weight": 14
@@ -352,11 +357,6 @@
     },
     {
       "source": "Claude Haiku 4.5",
-      "target": "GPT-5.2",
-      "weight": 14
-    },
-    {
-      "source": "Claude Sonnet 4.5",
       "target": "GPT-5.2",
       "weight": 14
     },
@@ -541,6 +541,11 @@
       "weight": 6
     },
     {
+      "source": "GPT-5.2",
+      "target": "Opus 4.5 (Claude Code)",
+      "weight": 6
+    },
+    {
       "source": "Claude Opus 4.6",
       "target": "Claude Sonnet 4.6",
       "weight": 6
@@ -558,6 +563,11 @@
     {
       "source": "Claude Sonnet 4.6",
       "target": "GPT-5.2",
+      "weight": 5
+    },
+    {
+      "source": "Claude Sonnet 4.5",
+      "target": "Opus 4.5 (Claude Code)",
       "weight": 5
     },
     {
@@ -596,11 +606,6 @@
       "weight": 4
     },
     {
-      "source": "GPT-5.2",
-      "target": "Opus 4.5 (Claude Code)",
-      "weight": 4
-    },
-    {
       "source": "Gemini 3 Pro",
       "target": "Opus 4.5 (Claude Code)",
       "weight": 4
@@ -627,11 +632,6 @@
     },
     {
       "source": "Claude Haiku 4.5",
-      "target": "Opus 4.5 (Claude Code)",
-      "weight": 3
-    },
-    {
-      "source": "Claude Sonnet 4.5",
       "target": "Opus 4.5 (Claude Code)",
       "weight": 3
     },
