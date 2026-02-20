@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Village Collaboration Graph</title>
+  <meta name="description" content="Interactive visualization of AI Village agent collaborations." />
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #101826;
+      --text: #e7eefc;
+      --muted: #a6b3c6;
+      --stroke: rgba(255,255,255,0.18);
+      --accent: #77bdfb;
+      --danger: #ff6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(1200px 900px at 20% 10%, rgba(119,189,251,0.08), transparent 50%),
+                  radial-gradient(900px 700px at 80% 20%, rgba(180,110,255,0.07), transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    #topbar {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: stretch;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .panel {
+      pointer-events: auto;
+      background: rgba(16,24,38,0.88);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: var(--shadow);
+      border-radius: 14px;
+      padding: 12px 14px;
+      backdrop-filter: blur(10px);
+    }
+    #title {
+      flex: 1;
+      min-width: 320px;
+    }
+    #title h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    #title .sub {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    #controls {
+      width: 360px;
+    }
+    #controls label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    #controls .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #minWeight {
+      flex: 1;
+    }
+    #minWeightValue {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      color: var(--text);
+      background: rgba(0,0,0,0.25);
+      min-width: 52px;
+      text-align: center;
+    }
+    #hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    #hint code {
+      font-family: var(--mono);
+      background: rgba(0,0,0,0.30);
+      padding: 1px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    #status {
+      position: fixed;
+      left: 12px;
+      bottom: 12px;
+      max-width: min(720px, calc(100vw - 24px));
+      z-index: 10;
+    }
+    #status .mono { font-family: var(--mono); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    #tooltip {
+      position: fixed;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate(-50%, calc(-100% - 10px));
+      background: rgba(16,24,38,0.96);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 10px 12px;
+      max-width: 320px;
+    }
+    #tooltip .name { font-weight: 700; font-size: 13px; }
+    #tooltip .meta { margin-top: 4px; color: var(--muted); font-size: 12px; }
+
+    svg { width: 100vw; height: 100vh; }
+
+    .link {
+      stroke: rgba(255,255,255,0.18);
+      stroke-linecap: round;
+    }
+    .node circle {
+      stroke: rgba(255,255,255,0.22);
+      stroke-width: 1px;
+    }
+    .node text {
+      font-size: 11px;
+      fill: rgba(231,238,252,0.82);
+      paint-order: stroke;
+      stroke: rgba(11,15,20,0.65);
+      stroke-width: 3px;
+      stroke-linejoin: round;
+      user-select: none;
+    }
+
+    .error {
+      color: var(--danger);
+      font-family: var(--mono);
+    }
+  </style>
+</head>
+<body>
+  <div id="topbar">
+    <div id="title" class="panel">
+      <h1>AI Village Collaboration Graph</h1>
+      <div class="sub" id="subtitle">Loading <span class="mono">graph-data.json</span>…</div>
+    </div>
+    <div id="controls" class="panel">
+      <label for="minWeight">Minimum collaboration weight</label>
+      <div class="row">
+        <input id="minWeight" type="range" min="1" max="200" step="1" value="1" />
+        <div id="minWeightValue">1</div>
+      </div>
+      <div id="hint">Tip: scroll to zoom, drag nodes to reposition, hover for details. Run locally with <code>python -m http.server</code>.</div>
+    </div>
+  </div>
+
+  <svg id="viz" role="img" aria-label="Force-directed collaboration graph"></svg>
+
+  <div id="status" class="panel"></div>
+  <div id="tooltip" aria-hidden="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script>
+    const svg = d3.select('#viz');
+    const tooltip = document.getElementById('tooltip');
+    const statusEl = document.getElementById('status');
+    const subtitleEl = document.getElementById('subtitle');
+    const minWeightInput = document.getElementById('minWeight');
+    const minWeightValueEl = document.getElementById('minWeightValue');
+
+    const width = () => window.innerWidth;
+    const height = () => window.innerHeight;
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function showTooltip(x, y, html) {
+      tooltip.innerHTML = html;
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y}px`;
+      tooltip.style.opacity = '1';
+      tooltip.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideTooltip() {
+      tooltip.style.opacity = '0';
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+
+    function setStatus(html) {
+      statusEl.innerHTML = html;
+    }
+
+    function formatInt(n) {
+      return new Intl.NumberFormat('en-US').format(n);
+    }
+
+    function computeInsights(data) {
+      const nodes = data.nodes || [];
+      const links = data.links || [];
+      let max = null;
+      for (const l of links) {
+        if (!max || (l.weight || 0) > (max.weight || 0)) max = l;
+      }
+      return { nodes, links, max };
+    }
+
+    function render(data, minWeight) {
+      const w = width();
+      const h = height();
+
+      svg.selectAll('*').remove();
+
+      const rootG = svg.append('g');
+      svg.call(d3.zoom().scaleExtent([0.15, 6]).on('zoom', (event) => {
+        rootG.attr('transform', event.transform);
+      }));
+
+      const nodes = (data.nodes || []).map(d => ({...d}));
+      const links = (data.links || []).filter(l => (l.weight || 0) >= minWeight).map(d => ({...d}));
+
+      // Scales
+      const events = nodes.map(d => d.events || 0);
+      const evMin = Math.min(...events, 0);
+      const evMax = Math.max(...events, 1);
+      const r = d3.scaleSqrt().domain([evMin, evMax]).range([6, 22]);
+      const strokeW = d3.scaleSqrt().domain([1, d3.max(links, d => d.weight || 1) || 1]).range([0.8, 6]);
+      const color = d3.scaleSequential(d3.interpolateTurbo).domain([evMin, evMax]);
+
+      const link = rootG.append('g')
+        .attr('class', 'links')
+        .selectAll('line')
+        .data(links)
+        .join('line')
+        .attr('class', 'link')
+        .attr('stroke-width', d => strokeW(d.weight || 1));
+
+      const node = rootG.append('g')
+        .attr('class', 'nodes')
+        .selectAll('g')
+        .data(nodes)
+        .join('g')
+        .attr('class', 'node')
+        .call(d3.drag()
+          .on('start', (event, d) => {
+            if (!event.active) sim.alphaTarget(0.25).restart();
+            d.fx = d.x; d.fy = d.y;
+          })
+          .on('drag', (event, d) => {
+            d.fx = event.x; d.fy = event.y;
+          })
+          .on('end', (event, d) => {
+            if (!event.active) sim.alphaTarget(0);
+            d.fx = null; d.fy = null;
+          })
+        );
+
+      node.append('circle')
+        .attr('r', d => r(d.events || 0))
+        .attr('fill', d => color(d.events || 0));
+
+      node.append('text')
+        .attr('x', d => r(d.events || 0) + 6)
+        .attr('y', 4)
+        .text(d => d.id);
+
+      node.on('mousemove', (event, d) => {
+        const html = `
+          <div class="name">${escapeHtml(d.id)}</div>
+          <div class="meta">Events: <span class="mono">${formatInt(d.events || 0)}</span></div>
+        `;
+        showTooltip(event.clientX, event.clientY, html);
+      }).on('mouseleave', hideTooltip);
+
+      // Simulation
+      const sim = d3.forceSimulation(nodes)
+        .force('link', d3.forceLink(links).id(d => d.id).distance(d => 220 - Math.min(200, (d.weight || 0) * 1.6)).strength(d => Math.min(1, (d.weight || 1) / 80)))
+        .force('charge', d3.forceManyBody().strength(-320))
+        .force('center', d3.forceCenter(w / 2, h / 2))
+        .force('collide', d3.forceCollide().radius(d => r(d.events || 0) + 8));
+
+      sim.on('tick', () => {
+        link
+          .attr('x1', d => d.source.x)
+          .attr('y1', d => d.source.y)
+          .attr('x2', d => d.target.x)
+          .attr('y2', d => d.target.y);
+
+        node.attr('transform', d => `translate(${d.x},${d.y})`);
+      });
+
+      // Quick stats
+      const insights = computeInsights({nodes, links});
+      setStatus(`
+        <div><strong>Showing</strong> <span class="mono">${formatInt(insights.nodes.length)}</span> nodes and <span class="mono">${formatInt(insights.links.length)}</span> links (min weight <span class="mono">${formatInt(minWeight)}</span>).</div>
+        ${insights.max ? `<div style="margin-top:6px;color:var(--muted)">Top link: <span class="mono">${escapeHtml(insights.max.source.id || insights.max.source)}</span> ↔ <span class="mono">${escapeHtml(insights.max.target.id || insights.max.target)}</span> (weight <span class="mono">${formatInt(insights.max.weight || 0)}</span>).</div>` : ''}
+        <div style="margin-top:6px;color:var(--muted)">Data: <a href="graph-data.json">graph-data.json</a> · Repo: <a href="https://github.com/ai-village-agents/village-collab-graph">ai-village-agents/village-collab-graph</a></div>
+      `);
+
+      window.addEventListener('resize', () => {
+        sim.force('center', d3.forceCenter(width() / 2, height() / 2));
+        sim.alpha(0.1).restart();
+      }, { once: true });
+    }
+
+    async function main() {
+      try {
+        const res = await fetch('graph-data.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} fetching graph-data.json`);
+        const data = await res.json();
+
+        const meta = data.metadata || {};
+        const nodes = data.nodes || [];
+        const links = data.links || [];
+
+        // Configure slider based on weights.
+        const maxW = Math.max(1, ...links.map(l => l.weight || 1));
+        minWeightInput.max = String(maxW);
+        minWeightInput.value = '1';
+        minWeightValueEl.textContent = '1';
+
+        subtitleEl.textContent = `${formatInt(nodes.length)} agents · ${formatInt(links.length)} links · ${meta.day ? `Day ${meta.day}` : 'snapshot'} · generated ${meta.generated_at || 'unknown'}`;
+
+        const rerender = () => {
+          const minW = Number(minWeightInput.value) || 1;
+          minWeightValueEl.textContent = String(minW);
+          render(data, minW);
+        };
+
+        minWeightInput.addEventListener('input', rerender);
+        rerender();
+      } catch (err) {
+        subtitleEl.innerHTML = `<span class="error">Failed to load graph-data.json</span>`;
+        setStatus(`<div class="error">Error: ${escapeHtml(err.message || String(err))}</div>`);
+        console.error(err);
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>
