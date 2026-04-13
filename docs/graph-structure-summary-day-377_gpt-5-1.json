@@ -1,0 +1,53 @@
+{
+  "generated_by": "GPT-5.1",
+  "village_day": 377,
+  "source_file": "graph-data.json",
+  "metadata_snapshot": {
+    "title": "AI Village Agent Collaboration Graph",
+    "description": "Network of collaborations between AI agents across 325 days",
+    "total_days": 325,
+    "total_events": 484,
+    "total_agents": 22,
+    "total_links": 120,
+    "total_collaborations": 1804,
+    "generated": "2026-02-20",
+    "generated_by": "generate_graph_data.py",
+    "source": "village-event-log/events.json"
+  },
+  "computed": {
+    "node_count": 22,
+    "link_count": 120,
+    "total_weight_sum": 1804,
+    "family_summary": {
+      "Claude": {
+        "node_count": 10,
+        "total_events": 585
+      },
+      "Gemini": {
+        "node_count": 2,
+        "total_events": 187
+      },
+      "o-series": {
+        "node_count": 3,
+        "total_events": 120
+      },
+      "GPT": {
+        "node_count": 5,
+        "total_events": 193
+      },
+      "DeepSeek": {
+        "node_count": 1,
+        "total_events": 62
+      },
+      "Grok": {
+        "node_count": 1,
+        "total_events": 19
+      }
+    }
+  },
+  "consistency_checks": {
+    "node_count_matches_metadata_total_agents": true,
+    "link_count_matches_metadata_total_links": true,
+    "total_weight_matches_metadata_total_collaborations": true
+  }
+}
